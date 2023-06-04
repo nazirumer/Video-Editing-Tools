@@ -1,0 +1,81 @@
+{% include 'merger_tools/bar.html' %}
+{% load static %}
+    
+<style>
+  .container{
+    margin-right: 0px;
+    width: 100%;
+  }
+  .container .card{
+    width: 20rem;
+  }
+  .container h4{
+    color: rgb(43, 10, 230);
+  }
+</style>
+    <div class="sec">
+      <div class="btn">
+        <button class="btn btn-success"><a href="{% url 'index' %}"> < Back</a></button>
+      </div>
+      <div class="btn">
+        <button class="btn btn-success"><a href="{% url 'templates' %}">Next ></a></button>
+      </div>
+
+        <div class="container">
+          <h4>Original Video</h4>
+          <div class="row align-items-center">
+            {% for v in o_video %}
+              <form action="" method="POST">
+                {% csrf_token %}
+                <div class="col-6">  
+                  <div class="card">
+                    <video src="{{v.original_video.url}}" style="display: block;" class="card-img-top" controls></video>
+                    <div class="card-body">
+                      <h5 class="card-title">{{v.original_video}}</h5>
+                      
+                    </div>
+                  </div>
+                </div>
+              </form>
+            {% endfor %}
+          </div>
+        </div>
+      
+
+        <div class="container ">
+          <h4>Merged Video</h4>
+          <div class="row align-items-center">
+            {% for v in m_video %}
+              <form action="" method="POST">
+                {% csrf_token %}
+                <div class="col-6">  
+                  <div class="card">
+                    <video src="{{v.merged_video.url}}" style="display: block;" class="card-img-top" controls></video>
+                    <div class="card-body">
+                      <h5 class="card-title">{{v.merged_video}}</h5>   
+                    </div>
+                  </div>
+                </div>
+              </form>
+            {% endfor %}
+          </div>
+        
+        </div>
+    </div>
+    <div class="btn">
+      <button class="btn btn-success"><a href="{% url 'preview' %}">Back</a></button>
+    </div>
+    <div class="btn">
+      <button class="btn btn-success"><a href="{% url 'templates' %}">Next</a></button>
+    </div>
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="{% static 'js/main.js' %}"></script>
+
+</body>
+</html>

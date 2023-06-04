@@ -1,0 +1,729 @@
+{% include 'merger_tools/bar.html' %}
+{% load static %}
+
+<style>
+  .progress12{
+      margin-bottom: 0%;
+      margin-top: 0%;
+  }
+  #progressBar{
+      padding: 20px;
+      width: 70%;
+  }
+  #finalMessage{
+    color: green;
+  }
+  #message{
+    color: brown;
+  }
+</style>
+
+  <section class="progress12" id="progress12" style="display: none;">
+    <progress id="progressBar" value="0" max="100"></progress>
+    <span id="status"></span>
+    <h3 id="finalMessage"></h3>
+    <p id="message"></p>
+  </section>
+
+
+
+<section class='choose-template'>
+  <div class="select">
+    <span onclick="select_template()">Select from availabale templates</span>
+  </div>
+  <div class="own">
+    <span onclick="create_template()">Create Your Own Template</span>
+  </div>
+  {{error}}
+</section>
+
+<div class="create-template" id="create-template" style="display: none;">
+  <div class="create-template" id="create-template" style="display: block;">
+    <form method="POST">
+      {% csrf_token %}
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label for="inputState">Original video placement</label>
+          <select id="inputState1" required name="o_place" class="form-control" onchange="javascript: dynamicdropdown(this.options[this.selectedIndex].value);">
+            <option selected>Choose placement...</option>
+            <option value="top">Top</option>
+            <option value="bottom">Bottom</option>
+            <option value="left">Left side</option>
+            <option value="right">Right side</option>
+          </select>
+        </div>
+        <div class="form-group col-md-4">
+          <label for="inputState">Merged video placement</label>
+          <select id="inputState2" required name="m_place" class="form-control"  onchange="javascript: dynamicdropdown(this.options[this.selectedIndex].value);">
+            <option selected>Choose placement...</option>
+            <option value="top">Top</option>
+            <option value="bottom">Bottom</option>
+            <option value="left">Left side</option>
+            <option value="right">Right side</option>
+          </select>
+        </div>
+      </div>
+      
+      <div class="form-row temp">
+        <div class="form-group col-md-2">
+          <label for="inputState">Template size:</label><br>
+          <select id="inputState" required name="temp-size" class="form-control">
+            <option value="9:16" selected>9:16</option>
+            <option value="1:1">1:1</option>
+          </select>
+        </div>
+      </div>
+
+      <span onclick="setting_create()">Setting</span><br>
+      <div class="setting" id="setting_create" style="display: none;">
+             <label for="">Select sound:</label>
+       <select name="sound" id="">
+           <option value="no_sound">No Sounds</option>
+           <option value="s_from_original">Sound from original</option>
+           <option value="s_from_merged">Sound from merged</option>
+           <option value="s_from_both">Sound from both</option>
+       </select><br>
+        <label>Select Formats:</label>
+        <select required name="format">          
+          <option value="mp4">mp4</option>
+          <option value="MOV">MOV</option>
+        </select><br>
+        <label>Crop Original:</label>
+        <select id="genDropdown" name="crop_original" class="form-select" id="Sub1" required>
+          
+        </select><br>
+        <!-- <select required name="crop_original">          
+          <option value="middle">Middle</option>
+          <option value="top">Top</option>
+          <option value="bottom">Bottom</option>        
+        </select><br> -->
+        <label>Crop Merged:</label>
+        <select id="genDropdown1" name="crop_merged" class="form-select" id="Sub1" required>
+          
+        </select><br>
+<!--         <select required name="crop_merged">         
+          <option value="middle" selected>Middle</option>
+          <option value="top">Top</option>
+          <option value="bottom">Bottom</option>        
+        </select><br> -->
+        <label>Output format:</label>
+        <select required name="resize">
+          
+          <option value="HD" selected>HD</option>
+          <option value="4K">4K</option>
+        
+        </select><br>
+      </div>
+      <button type="submit" onclick="start(0)" class="btn btn-primary">Create</button>      
+    </form>
+  </div>
+</div>
+
+<div class="all-templates" id="all-templates" style="display: none;">
+  <h4>Templates 9:16</h4>
+
+  <div class="9-16">
+   <div class="both-card" style="width: 16rem;">
+     <form action="" method="post">
+       {% csrf_token %}
+     <div class="card1">
+       <div class="card original" style="width: 14rem; height: 9rem;">
+           <input class="card-title" name="temp1" value="Original Video">
+       </div>
+       <div class="card merged" style="width: 14rem; height: 9rem;">
+           <input class="card-title" name="temp1" value="Merged Video">
+       </div>
+     </div> 
+     <br>
+     <span onclick="setting1()">Setting</span><br>
+    <div class="setting" id="setting1" style="display: none;">
+      <label for="">Select sound:</label>
+     <select name="sound" id="">
+         <option value="no_sound">No Sounds</option>
+         <option value="s_from_original">Sound from original</option>
+         <option value="s_from_merged">Sound from merged</option>
+         <option value="s_from_both">Sound from both</option>
+     </select><br>
+      <label>Select Formats:</label>
+      <select required name="format">
+        
+        <option value="mp4" selected>mp4</option>
+        <option value="MOV">MOV</option>
+      </select><br>
+      <label>Crop Original:</label>
+      <select required name="crop_original">
+        
+        <option value="middle">Middle</option>
+        <option value="top">Top</option>
+        <option value="bottom">Bottom</option>        
+      </select><br>
+      <label>Crop Merged:</label>
+      <select required name="crop_merged">
+        
+        <option value="middle">Middle</option>
+        <option value="top">Top</option>
+        <option value="bottom">Bottom</option>        
+      </select><br>
+      <label>Output format:</label>
+      <select required name="resize">
+        
+        <option value="HD" selected>HD</option>
+        <option value="4K">4K</option>
+      
+      </select><br>
+    </div>
+     <button type="submit" onclick="start(0)" class="btn btn-success">Select</button>
+     </form>
+   </div>
+   <div class="both-card">
+     <form action="" method="post">
+       {% csrf_token %}
+     <div class="card2">
+       <div class="card merged" style="width: 14rem; height: 9rem;">
+           <input class="card-title" name="temp2" value="Merged Video">
+       </div>
+       <div class="card original" style="width: 14rem; height: 9rem;">
+           <input class="card-title" name="temp2" value="Original Video">
+       </div>
+     </div>
+     <br>
+     <span onclick="setting2()">Setting</span><br>
+     <div class="setting" id="setting2" style="display: none;">
+            <label for="">Select sound:</label>
+      <select name="sound" id="">
+          <option value="no_sound">No Sounds</option>
+          <option value="s_from_original">Sound from original</option>
+          <option value="s_from_merged">Sound from merged</option>
+          <option value="s_from_both">Sound from both</option>
+      </select><br>
+       <label>Select Formats:</label>
+       <select required name="format">
+         
+         <option value="mp4">mp4</option>
+         <option value="MOV">MOV</option>
+       </select><br>
+       <label>Crop Original:</label>
+       <select required name="crop_original">
+         
+         <option value="middle">Middle</option>
+         <option value="top">Top</option>
+         <option value="bottom">Bottom</option>        
+       </select><br>
+       <label>Crop Merged:</label>
+       <select required name="crop_merged">
+         
+         <option value="middle" selected>Middle</option>
+         <option value="top">Top</option>
+         <option value="bottom">Bottom</option>        
+       </select><br>
+       <label>Output format:</label>
+       <select required name="resize">
+         
+         <option value="HD" selected>HD</option>
+         <option value="4K">4K</option>
+       
+       </select><br>
+     </div>
+ 
+     <button type="submit" onclick="start(0)" class="btn btn-success">Select</button>
+     </form>
+   </div>
+   <style>
+    .both-card .card3 .card{
+      text-align: center;
+    }
+    .setting{
+      background-color: rgb(173, 194, 194);
+      padding: 10px;
+      border-radius: 5px;
+    }
+
+   </style>
+   <div class="both-card" style="width: 16rem;">
+     <form action="" method="POST">
+       {% csrf_token %}
+     <div class="card3">
+       <div class="card original" style="width: 7rem; height: 18rem;">
+        <input class="temp3" name="temp3" value="Original Video">  
+       </div>
+       <div class="card merged" style="width: 7rem; height: 18rem; margin-bottom: 10px;">
+           <input class="card-title" name="temp3" value="Merged Video">
+       </div>
+     </div>
+     <br>
+     <span onclick="setting3()">Setting</span><br>
+     <div class="setting" id="setting3" style="display: none;">
+            <label for="">Select sound:</label>
+      <select name="sound" id="">
+          <option value="no_sound">No Sounds</option>
+          <option value="s_from_original">Sound from original</option>
+          <option value="s_from_merged">Sound from merged</option>
+          <option value="s_from_both">Sound from both</option>
+      </select><br>
+       <label>Select Formats:</label>
+       <select required name="format">
+         
+         <option value="mp4">mp4</option>
+         <option value="MOV">MOV</option>
+       </select><br>
+       <label>Crop Original:</label>
+       <select required name="crop_original">
+         
+         <option value="middle_side">Middle</option>
+         <option value="left">Left</option>
+         <option value="right">Right</option>        
+       </select><br>
+       <label>Crop Merged:</label>
+       <select required name="crop_merged">
+         
+        <option value="middle_side">Middle</option>
+        <option value="left">Left</option>
+        <option value="right">Right</option>        
+       </select><br>
+       <label>Output format:</label>
+       <select required name="resize">
+         
+         <option value="HD" selected>HD</option>
+         <option value="4K">4K</option>
+       
+       </select><br>
+     </div>
+
+     <button type="submit" onclick="start(0)" class="btn btn-success">Select</button>
+     </form>
+   </div>
+   <div class="both-card" style="width: 16rem;">
+     <form action="" method="POST">
+       {% csrf_token %}
+       <div class="card3">
+        <div class="card original" style="width: 7rem; height: 18rem;">
+         <input class="temp3" name="temp4" value="Merged Video">  
+        </div>
+        <div class="card merged" style="width: 7rem; height: 18rem; margin-bottom: 10px;">
+            <input class="card-title" name="temp4" value="Original Video">
+        </div>
+      </div>  
+     <br>
+     <span onclick="setting4()">Setting</span><br>
+     <div class="setting" id="setting4" style="display: none;">
+            <label for="">Select sound:</label>
+      <select name="sound" id="">
+          <option value="no_sound">No Sounds</option>
+          <option value="s_from_original">Sound from original</option>
+          <option value="s_from_merged">Sound from merged</option>
+          <option value="s_from_both">Sound from both</option>
+      </select><br>
+       <label>Select Formats:</label>
+       <select required name="format">
+         
+         <option value="mp4">mp4</option>
+         <option value="MOV">MOV</option>
+       </select><br>
+       <label>Crop Original:</label>
+       <select required name="crop_original">
+         
+        <option value="middle_side">Middle</option>
+        <option value="left">Left</option>
+        <option value="right">Right</option>          
+       </select><br>
+       <label>Crop Merged:</label>
+       <select required name="crop_merged">
+         
+        <option value="middle_side">Middle</option>
+        <option value="left">Left</option>
+        <option value="right">Right</option>        
+       </select><br>
+       <label>Output format:</label>
+       <select required name="resize">
+         
+         <option value="HD" selected>HD</option>
+         <option value="4K">4K</option>
+       
+       </select><br>
+     </div>
+
+     <button type="submit" onclick="start(0)" class="btn btn-success">Select</button>
+     </form>
+   </div>
+  </div> <br>
+ <hr>
+ <br>
+ <div class="h4" style="display: block; width: 40rem;">
+  <h4>Template 1:1</h4>
+ </div>
+   
+   <div class="1-1">
+     <div class="both-card" style="width: 16rem;">
+       <form action="" method="POST">
+         {% csrf_token %}
+       <div class="card1">
+         <div class="card original" style="width: 14rem; height: 7rem;">
+             <input class="card-title" name="temp5" value="Original Video">
+         </div>
+         <div class="card merged" style="width: 14rem; height: 7rem;">
+             <input class="card-title" name="temp5" value="Merged Video">
+         </div>
+       </div>
+       <br>
+       <span onclick="setting5()">Setting</span><br>
+       <div class="setting" id="setting5" style="display: none;">
+              <label for="">Select sound:</label>
+        <select name="sound" id="">
+            <option value="no_sound">No Sounds</option>
+            <option value="s_from_original">Sound from original</option>
+            <option value="s_from_merged">Sound from merged</option>
+            <option value="s_from_both">Sound from both</option>
+        </select><br>
+         <label>Select Formats:</label>
+         <select required name="format">
+           
+           <option value="mp4">mp4</option>
+           <option value="MOV">MOV</option>
+         </select><br>
+         <label>Crop Original:</label>
+         <select required name="crop_original">
+           
+           <option value="middle">Middle</option>
+           <option value="top">Top</option>
+           <option value="bottom">Bottom</option>        
+         </select><br>
+         <label>Crop Merged:</label>
+         <select required name="crop_merged">
+           
+           <option value="middle" selected>Middle</option>
+           <option value="top">Top</option>
+           <option value="bottom">Bottom</option>        
+         </select><br>
+         <label>Output format:</label>
+         <select required name="resize">
+           
+           <option value="HD" selected>HD</option>
+           <option value="4K">4K</option>
+         
+         </select><br>
+       </div>
+     
+       <button type="submit" onclick="start(0)" class="btn btn-success">Select</button>
+       </form>
+     </div>
+     <div class="both-card" style="width: 16rem;">
+       <form action="" method="POST">
+         {% csrf_token %}
+       <div class="card2">
+         <div class="card merged" style="width: 14rem; height: 7rem;">
+             <input class="card-title" name="temp6" value="Merged Video">
+         </div>
+         <div class="card original" style="width: 14rem; height: 7rem;">
+           <div class="card-body">
+             <input class="card-title" name="temp6" value="Original Video">
+           </div>
+         </div>
+       </div>
+       <br>
+       <span onclick="setting6()">Setting</span><br>
+       <div class="setting" id="setting6" style="display: none;">
+              <label for="">Select sound:</label>
+        <select name="sound" id="">
+            <option value="no_sound">No Sounds</option>
+            <option value="s_from_original">Sound from original</option>
+            <option value="s_from_merged">Sound from merged</option>
+            <option value="s_from_both">Sound from both</option>
+        </select><br>
+         <label>Select Formats:</label>
+         <select required name="format">
+           
+           <option value="mp4">mp4</option>
+           <option value="MOV">MOV</option>
+         </select><br>
+         <label>Crop Original:</label>
+         <select required name="crop_original">
+           
+           <option value="middle">Middle</option>
+           <option value="top">Top</option>
+           <option value="bottom">Bottom</option>        
+         </select><br>
+         <label>Crop Merged:</label>
+         <select required name="crop_merged">
+           
+           <option value="middle" selected>Middle</option>
+           <option value="top">Top</option>
+           <option value="bottom">Bottom</option>        
+         </select><br>
+         <label>Output format:</label>
+         <select required name="resize">
+           
+           <option value="HD" selected>HD</option>
+           <option value="4K">4K</option>
+         
+         </select><br>
+       </div>
+  
+       <button type="submit" onclick="start(0)" class="btn btn-success">Select</button>
+       </form>
+     </div>
+     <div class="both-card" style="width: 16rem;">
+       <form action="" method="POST">
+         {% csrf_token %}
+       <div class="card3">
+         <div class="card original" style="width: 7rem; height: 14rem;">
+             <input class="card-title" name="temp7" value="Original Video">
+         </div>
+         <div class="card merged" style="width: 7rem; height: 14rem; margin-bottom: 10px;">
+             <input class="card-title" name="temp7" value="Merged Video">
+         </div>
+       </div>
+       <br>
+       <span onclick="setting7()">Setting</span><br>
+       <div class="setting" id="setting7" style="display: none;">
+              <label for="">Select sound:</label>
+        <select name="sound" id="">
+            <option value="no_sound">No Sounds</option>
+            <option value="s_from_original">Sound from original</option>
+            <option value="s_from_merged">Sound from merged</option>
+            <option value="s_from_both">Sound from both</option>
+        </select><br>
+         <label>Select Formats:</label>
+         <select required name="format">
+           
+           <option value="mp4">mp4</option>
+           <option value="MOV">MOV</option>
+         </select><br>
+         <label>Crop Original:</label>
+         <select required name="crop_original">
+           
+          <option value="middle_square">Middle</option>
+          <option value="left">Left</option>
+          <option value="right">Right</option>        
+         </select><br>
+         <label>Crop Merged:</label>
+         <select required name="crop_merged">
+           
+          <option value="middle_square">Middle</option>
+          <option value="left">Left</option>
+          <option value="right">Right</option>       
+         </select><br>
+         <label>Output format:</label>
+         <select required name="resize">
+           
+           <option value="HD" selected>HD</option>
+           <option value="4K">4K</option>
+         
+         </select><br>
+       </div>
+  
+       <button type="submit" onclick="start(0)" class="btn btn-success">Select</button>
+       </form>
+     </div>
+     <div class="both-card" style="width: 16rem;">
+       <form action="" method="POST">
+         {% csrf_token %}
+       <div class="card3">
+         <div class="card merged" style="width: 7rem; height: 14rem;">
+             <input class="card-title" name="temp8" value="Merged Video">
+         </div>
+         <div class="card original" style="width: 7rem; height: 14rem; margin-bottom: 10px;">
+             <input class="card-title" name="temp8" value="Original Video">
+         </div>
+       </div>
+       <br>
+       <span onclick="setting8()">Setting</span><br>
+       <div class="setting" id="setting8" style="display: none;">
+              <label for="">Select sound:</label>
+        <select name="sound" id="">
+            <option value="no_sound">No Sounds</option>
+            <option value="s_from_original">Sound from original</option>
+            <option value="s_from_merged">Sound from merged</option>
+            <option value="s_from_both">Sound from both</option>
+        </select><br>
+         <label>Select Formats:</label>
+         <select required name="format">
+           
+           <option value="mp4">mp4</option>
+           <option value="MOV">MOV</option>
+         </select><br>
+         <label>Crop Original:</label>
+         <select required name="crop_original">
+           
+          <option value="middle_square">Middle</option>
+          <option value="left">Left</option>
+          <option value="right">Right</option>       
+         </select><br>
+         <label>Crop Merged:</label>
+         <select required name="crop_merged">
+           
+          <option value="middle_square">Middle</option>
+          <option value="left">Left</option>
+          <option value="right">Right</option>      
+         </select><br>
+         <label>Output format:</label>
+         <select required name="resize">
+           
+           <option value="HD" selected>HD</option>
+           <option value="4K">4K</option>
+         
+         </select><br>
+       </div>
+  
+       <button type="submit" onclick="start(0)" class="btn btn-success">Select</button>
+       </form>
+     </div>
+   </div>
+ 
+</div>
+
+
+
+
+<hr>
+<div class="btn">
+  <button class="btn btn-success"><a href="{% url 'preview' %}"> < Back</a></button>
+</div>
+<div class="btn">
+  <button class="btn btn-success" onclick="step1()"><a href="{% url 'output' %}">Next ></a></button>
+</div>
+
+<script>
+
+/* create templates */
+  function doHTML(list){
+      let string ="";
+      let index = 0;
+      let l2 = list
+      list.forEach(element => {
+        string += `<option value="${l2[index]}">${element}</option>`;
+        index+=1;
+      });
+      
+      return string;
+    }
+    function dynamicdropdown(sem){
+      let subjects1 = ["middle", "top", 'bottom'];
+      let subjects2 = ["middle", "left",'right'];
+      
+      let genDropdown = document.getElementById("genDropdown");
+      if(sem =="top" || sem=='bottom'){
+        genDropdown.innerHTML = doHTML(subjects1);
+        genDropdown1.innerHTML = doHTML(subjects1);
+      }
+      if(sem=="left" || sem=='right'){
+        genDropdown.innerHTML = doHTML(subjects2);
+        genDropdown1.innerHTML = doHTML(subjects2);
+      }
+
+    }
+
+
+
+
+  function setting1(){
+    var x = document.getElementById('setting1')
+    if (x.style.display === 'none'){
+      x.style.display = 'block'
+    }
+    else{
+      x.style.display = 'none'
+    }
+  }
+  function setting2(){
+    var x = document.getElementById('setting2')
+    if (x.style.display === 'none'){
+      x.style.display = 'block'
+    }
+    else{
+      x.style.display = 'none'
+    }
+  }
+  function setting3(){
+    var x = document.getElementById('setting3')
+    if (x.style.display === 'none'){
+      x.style.display = 'block'
+    }
+    else{
+      x.style.display = 'none'
+    }
+  }
+  function setting4(){
+    var x = document.getElementById('setting4')
+    if (x.style.display === 'none'){
+      x.style.display = 'block'
+    }
+    else{
+      x.style.display = 'none'
+    }
+  }
+  function setting5(){
+    var x = document.getElementById('setting5')
+    if (x.style.display === 'none'){
+      x.style.display = 'block'
+    }
+    else{
+      x.style.display = 'none'
+    }
+  }
+  function setting6(){
+    var x = document.getElementById('setting6')
+    if (x.style.display === 'none'){
+      x.style.display = 'block'
+    }
+    else{
+      x.style.display = 'none'
+    }
+  }
+  function setting7(){
+    var x = document.getElementById('setting7')
+    if (x.style.display === 'none'){
+      x.style.display = 'block'
+    }
+    else{
+      x.style.display = 'none'
+    }
+  }
+  function setting8(){
+    var x = document.getElementById('setting8')
+    if (x.style.display === 'none'){
+      x.style.display = 'block'
+    }
+    else{
+      x.style.display = 'none'
+    }
+  }
+  function setting_create(){
+    var x = document.getElementById('setting_create')
+    if (x.style.display === 'none'){
+      x.style.display = 'block'
+    }
+    else{
+      x.style.display = 'none'
+    }
+  }
+
+  function start(al) {
+  var bar = document.getElementById('progressBar');
+  var status = document.getElementById('status');
+  var x = document.getElementById('progress12')
+  if (x.style.display === 'none'){
+    x.style.display = 'block'
+  }
+    status.innerHTML = al + "%";
+    bar.value = al;
+    al++;
+    var sim = setTimeout("start(" + al + ")", 1600);
+    if (al == 97) {
+        status.innerHTML = "97%";
+        bar.value = 97;
+        clearTimeout(sim);
+        var finalMessage = document.getElementById('finalMessage');
+        var message = document.getElementById('message')
+        finalMessage.innerHTML = "Processing, Please Wait!!!";
+        message.innerHTML = "Please Don't Refresh this page. It Will redirect you to the Output page once it finished."
+    }
+  
+}
+var amountLoaded = 0;
+</script>
+      <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+      <script src="{% static 'js/main.js' %}"></script>
+    </body>
+</html>

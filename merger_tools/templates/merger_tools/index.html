@@ -1,0 +1,78 @@
+{% include 'merger_tools/bar.html' %}
+{% load static %}
+  
+
+
+<style>
+    .progress12{
+        margin-bottom: 0%;
+        margin-top: 0%;
+    }
+    #progressBar{
+        padding: 20px;
+        width: 70%;
+    }
+</style>
+
+<script>
+function start(al) {
+  var bar = document.getElementById('progressBar');
+  var status = document.getElementById('status');
+  var x = document.getElementById('progress12')
+  if (x.style.display === 'none'){
+    x.style.display = 'block'
+  }
+    status.innerHTML = al + "%";
+    bar.value = al;
+    al++;
+    var sim = setTimeout("start(" + al + ")", 300);
+    if (al == 98) {
+        status.innerHTML = "98%";
+        bar.value = 98;
+        clearTimeout(sim);
+        var finalMessage = document.getElementById('finalMessage');
+        finalMessage.innerHTML = "Process is complete";
+    }
+  
+    
+}
+var amountLoaded = 0;
+//start(amountLoaded);
+
+</script>
+    <section>
+        <section class="progress12" id="progress12" style="display: none;">
+            <progress id="progressBar" value="0" max="100"></progress>
+            <span id="status"></span>
+            <h4 id="finalMessage"></h4>
+        </section>
+        <h3>Welcome to Video mergin Tools</h3>
+        
+        <div class="video">
+            <form action="" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="original" id='original'>
+                    <label for="inputState">Choose Original Video:</label>
+                    <input required type="file" onclick="select()" multiple name="original_video" id="original_v">
+
+                </div>
+                <div class="merged" id="merged">
+                    <label for="inputState">Choose Merged Video:</label>
+                    <input type="file" required multiple name="merged_video" id="merged_v">
+
+                </div>
+                <br>
+                <button type="submit" onclick="start(0)" id="step" class="btn btn-success">Upload</button>
+            </form>
+        </div>
+
+    </section>
+ 
+    
+    
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

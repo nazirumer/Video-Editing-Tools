@@ -1,0 +1,470 @@
+
+
+
+*{
+
+    margin: 0;
+
+    padding: 0;
+
+    box-sizing: border-box;
+
+}
+
+@font-face {
+
+    font-family: pop;
+
+    src: url(./Fonts/Poppins-Medium.ttf);
+
+}
+
+
+.main{
+    background-color: rgb(54, 123, 126);
+    width: 100%;
+    display: flex;
+    padding-top: 40px;
+    padding-left: 10%;
+    justify-content: center;
+
+    align-items: top;
+
+    font-family: pop;
+
+    flex-direction: column;
+
+}
+
+.head{
+
+    text-align: center;
+
+}
+
+.head_1{
+
+    font-size: 30px;
+
+    font-weight: 600;
+
+    color: #333;
+
+}
+
+.head_1 span{
+
+    color: #ff4732;
+
+}
+
+.head_2{
+
+    font-size: 16px;
+
+    font-weight: 600;
+
+    color: #333;
+
+    margin-top: 3px;
+
+}
+
+ul{
+
+    display: flex;
+
+    margin-top: 80px;
+
+}
+
+ul li{
+
+    list-style: none;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+    padding-left: 40px;
+
+}
+
+ul li .icon{
+
+    font-size: 35px;
+
+    color: #ff4732;
+
+    margin: 0 60px;
+
+}
+
+ul li .text{
+
+    font-size: 20px;
+
+    font-weight: 600;
+
+    color: #32ff65;
+
+}
+
+
+/* Progress Div Css  */
+
+
+ul li .progress{
+
+    width: 30px;
+
+    height: 30px;
+
+    border-radius: 50%;
+
+    background-color: rgba(68, 68, 68, 0.781);
+
+    margin: 14px 0;
+
+    display: grid;
+
+    place-items: center;
+
+    color: #fff;
+
+    position: relative;
+
+    cursor: pointer;
+
+}
+
+.progress1::after{
+    content: " ";
+
+    position: absolute;
+
+    width: 125px;
+
+    height: 5px;
+
+    background-color: rgba(68, 68, 68, 0.781);
+
+    right: 30px;
+
+}
+
+.one::after{
+
+    width: 0;
+
+    height: 0;
+
+}
+
+ul li .progress .uil{
+
+    display: none;
+
+}
+
+ul li .progress p{
+
+    font-size: 13px;
+
+}
+
+
+/* Active Css  */
+
+
+ul li .active{
+
+    background-color: #ff4732;
+
+    display: grid;
+
+    place-items: center;
+
+}
+
+li .active::after{
+
+    background-color: #ff4732;
+
+}
+
+ul li .active p{
+
+    display: none;
+
+}
+
+ul li .active .uil{
+
+    font-size: 20px;
+
+    display: flex;
+
+}
+
+
+/* Responsive Css  */
+
+
+@media (max-width: 980px) {
+
+    ul{
+
+        flex-direction: column;
+
+    }
+
+    ul li{
+
+        flex-direction: row;
+
+    }
+
+    ul li .progress{
+
+        margin: 0 30px;
+
+    }
+
+    .progress::after{
+
+        width: 5px;
+
+        height: 55px;
+
+        bottom: 30px;
+
+        left: 50%;
+
+        transform: translateX(-50%);
+
+        z-index: -1;
+
+    }
+
+    .one::after{
+
+        height: 0;
+
+    }
+
+    ul li .icon{
+
+        margin: 15px 0;
+
+    }
+
+}
+
+
+@media (max-width:600px) {
+
+    .head .head_1{
+
+        font-size: 24px;
+
+    }
+
+    .head .head_2{
+
+        font-size: 16px;
+
+    }
+
+}
+
+/* Progress bar end  */
+
+/* index start */
+
+section{
+    width: 80%;
+    padding: 5%;
+    display: block;
+}
+section h3{
+    text-align: center;
+    padding: 10px;
+    color: deepskyblue;
+}
+.video{
+    text-align: center;
+    
+}
+.video button{
+    width: 30%;
+}
+.video .original{
+    margin: 20px;
+}
+.video label{
+    color: black;
+    font-size: 23px;
+}
+.video video{
+   margin-left: 25%;
+}
+.scale{
+    display: block;
+    margin-left: 20%;
+    float: left;
+    width: 50%;
+    text-align: left;
+    margin-bottom: 30px;
+}
+.scale label{
+    text-align: left;
+    justify-self: left;
+    color: rgb(25, 197, 240);
+}
+.video .merged{
+    width: 100%;
+}
+.create-template button{
+    width: 50%;
+}
+
+/* Preview start */
+
+section{
+    text-align: center;
+    margin: 5%;
+}
+form span{
+    padding: 3px;
+    background-color: gray;
+    margin: 10px; 
+    cursor: pointer;
+    border: #333;
+    border-radius: 5px;
+}
+form span:hover{
+  background-color: chartreuse;
+}
+.btn{
+  margin: 20px;
+  text-align: left;
+}
+.btn a{
+    padding-right: 10px;
+    color: black;
+}
+.card{
+  width: 20rem;
+}
+.card video{
+  max-height: 20rem;
+  width: 100%;
+}
+button:hover{
+  background-color: chartreuse;
+}
+button{
+  cursor: pointer;
+}
+#ipt{
+  color: white;
+  border: white;
+  width: 1px;
+}
+h4{
+  padding: 20px;
+  color: deepskyblue;
+}
+
+/* end previews */
+
+/* start templates */
+
+.choose-template {
+    margin-top: 0%;
+    padding-top: 0%;
+    padding-left: 5%;
+    width: 90%;
+    float: left;
+  }
+  .create-template{
+    text-align: left;
+    width: 95%;
+    padding-left: 5%;
+  } 
+  .all-templates{
+    padding-left: 5%;
+    text-align: left;
+  }
+  .all-templates .both-card{
+    float: left;
+    flex: auto;
+    margin: 20px;
+  }
+  .both-card .original {
+    background-color: rgb(0, 238, 255);
+  }
+  .both-card .merged{
+    background-color: rgb(248, 59, 59);
+  }
+  .both-card .card3 .card{
+    width: 100%;
+    float: left;
+  }
+  
+  .card3 .card-body{
+    width: 100%;
+  }
+  .both-card button{
+    margin: 10px;
+  }
+  .both-card select{
+    padding: 5px;
+    margin: 5px;
+  }
+  .select, .own{
+    padding: 10px;
+    margin: 10px;
+    float: left;
+    background-color: aquamarine;
+    cursor: pointer;
+    border-radius: 8px;
+  }
+  .select:hover,.own:hover{
+    background-color: aqua;
+  }
+  .form-row span{
+    padding: 5px;
+    margin: 10px;
+    float: left;
+    background-color: rgb(23, 200, 223);
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  .form-row span:hover{
+    background-color: rgb(79, 170, 170);
+  }
+  #progress12{
+    margin-top: 0%;
+    margin-left: 5%;
+    margin-right: 15%;
+    margin-bottom: 0%;
+  }
+/* end templates */
+
+/* output start */
+.output{
+    margin-top: 0%;
+    text-align: center;
+    margin: 5%;
+}
+.output .card {
+    margin: 1em auto;
+}
+.output h4{
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-weight: 600;
+    color: #3672c0;
+}
